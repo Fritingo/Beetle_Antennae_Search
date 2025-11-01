@@ -24,13 +24,31 @@ bettle_step_list.append(start)
 
 
 def get_fitness(x,goal):
-        dis = distance.euclidean(x,goal) 
+    """
+    Calculates the fitness of a given position.
+
+    Args:
+        x (numpy.ndarray): The current position.
+        goal (numpy.ndarray): The target position.
+
+    Returns:
+        float: The fitness value, calculated as 1 / (1 + distance).
+    """
+    dis = distance.euclidean(x,goal)
 #        for i in range(goal_index.shape[0]-1):
 #            dis = distance.euclidean(goal[goal_index[i]],goal[goal_index[i+1]]) + dis
-        return 1/(1+dis)
+    return 1/(1+dis)
     
     
 def plt_path(order,color,num):
+    """
+    Plots the path of the beetle.
+
+    Args:
+        order (list): A list of positions.
+        color (str): The color of the path.
+        num (int): The number of steps to plot.
+    """
     x = [start[0]]
     y = [start[1]]
     for i in range(num):
@@ -43,6 +61,16 @@ def plt_path(order,color,num):
 
     
 def odor(xl,xr):
+    """
+    Determines the direction of the next step based on odor intensity.
+
+    Args:
+        xl (numpy.ndarray): The position of the left antenna.
+        xr (numpy.ndarray): The position of the right antenna.
+
+    Returns:
+        int: -1 or 1, indicating the direction of the stronger odor.
+    """
     fly_l = distance.euclidean(xl,goal)
     fly_r = distance.euclidean(xr,goal)
     return np.sign(fly_l-fly_r)
@@ -50,6 +78,16 @@ def odor(xl,xr):
 
 
 def plt_bettle(position,direction):
+    """
+    Plots the beetle and its antennae.
+
+    Args:
+        position (numpy.ndarray): The current position of the beetle.
+        direction (float): The current direction of the beetle.
+
+    Returns:
+        tuple: A tuple containing the positions of the left and right antennae.
+    """
     
     bettle_xl = np.append(position[0]-bettle_tentacles_d*np.cos(direction),position[1]-bettle_tentacles_d*np.sin(direction))
     bettle_xr = np.append(position[0]+bettle_tentacles_d*np.cos(direction),position[1]+bettle_tentacles_d*np.sin(direction))
